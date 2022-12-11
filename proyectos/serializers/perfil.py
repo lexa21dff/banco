@@ -5,5 +5,5 @@ from proyectos.models import Perfil
 class PerfilSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Perfil
-        fields = [ 'url','documento', 'rol', 'usuario']
+        fields = [ 'url','id','documento', 'rol', 'usuario']
 

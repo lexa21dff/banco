@@ -4,4 +4,4 @@ from proyectos.models import Equipo_trabajo
 class Equipo_trabajoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Equipo_trabajo
-        fields = ['url', 'codigo_grupo']
+        fields = ['url', 'id','codigo_grupo']

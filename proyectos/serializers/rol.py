@@ -4,5 +4,5 @@ from proyectos.models import Rol
 class RolSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Rol
-        fields = ['url', 'nombre']
+        fields = ['url', 'id','nombre']
 

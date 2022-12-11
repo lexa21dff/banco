@@ -4,5 +4,5 @@ from proyectos.models import Tipo_Revision
 class Tipo_revisionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tipo_Revision
-        fields = ['url', 'nombre']
+        fields = ['url','id','nombre']
 

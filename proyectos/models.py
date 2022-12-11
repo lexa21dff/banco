@@ -134,7 +134,7 @@ class Entrega (models.Model):
     calificacion            = models.CharField(max_length=20, choices = CALIFICACION,null= True, blank= True)
     descripcion_entrega     = models.CharField(max_length=5000 )    
     respuesta_instructor    = models.CharField(max_length=5000, null= True, blank= True)  
-    Estado_entrega          = models.CharField(max_length=5000 )   
+    # Estado_entrega          = models.CharField(max_length=5000 )   
     instructor              = models.CharField(max_length=300 ,null= True, blank= True) # solo va el nombre del instructor que hizo la revision     
     
     proyecto                = models.ForeignKey(Proyecto, on_delete = models.PROTECT )

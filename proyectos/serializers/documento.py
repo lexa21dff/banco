@@ -4,4 +4,4 @@ from proyectos.models import Documento
 class DocumentoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Documento
-        fields = ['url', 'entrega']
+        fields = ['url', 'id','entrega']
