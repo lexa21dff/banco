@@ -7,7 +7,7 @@ class Equipo_trabajoViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Equipo_trabajo.objects.all()
+    queryset = Inscrito.objects.all()
     serializer_class = Equipo_trabajoSerializer
     # permission_classes = [permissions.IsAuthenticated]
 

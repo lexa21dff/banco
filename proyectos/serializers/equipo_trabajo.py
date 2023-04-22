@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from proyectos.models import Equipo_trabajo
+from proyectos.models import Inscrito
 
 class Equipo_trabajoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Equipo_trabajo
+        model = Inscrito
         fields = ['url', 'id','codigo_grupo']

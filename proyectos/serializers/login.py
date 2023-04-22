@@ -12,6 +12,7 @@ class UserLoginSerializer(serializers.Serializer):
     #User login serializer
     #Handle the  login request data
     email = serializers.EmailField()
+    #username = serializers.CharField(min_length=4,max_length=20)
     password = serializers.CharField(min_length=8,max_length=64)
 
     def validate(self,  data):
@@ -23,6 +24,10 @@ class UserLoginSerializer(serializers.Serializer):
         print(user)
         if not user:
             raise serializers.ValidationError('invalido las credenciales')
+
+        #limitar login a usurios con cuenta verificada
+        if not user.is_verified:
+            raise serializer.ValidationError('cuenta no verificada')
         self.context['user']=user
         return data
     

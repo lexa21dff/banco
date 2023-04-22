@@ -1,5 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import AbstractUser 
+
+from django.core.validators import RegexValidator
+
 
 # Create your models here.
 MODALIDAD = (
@@ -68,6 +71,45 @@ class Ficha(models.Model):
     def __str__(self):
         return str(self.codigo) + " " + self.programa.nombre
 
+class User(AbstractUser):
+    #extender desde el usuario de Abtract de django,
+    # cambiar el campo de nombre de usuario a correo electrónico agregar algunos campos adicionales
+
+    email = models.EmailField(
+        'email address',
+        unique=True,
+        # Error_messsages={
+        #     'unique': 'Ya existe un usuario con ese email'
+        # }
+    )
+    # phone_regex = RegexValidator(
+    #     regex=r'\+'?1?\d{9,15}$',
+    #     message="El número de teléfono debe ingresarse en el formato: +999999999. Se permiten hasta 15 dígitos".
+    # )
+    # phone_number = models.CharField(validators=[phone_regex],max_length=17, blank=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS =['username','first_name', 'last_name']
+
+    # is_client = models.Booleanfield(
+    #     'client status'
+    #     default=True,
+    #     help_text=(
+    #         ' ayudar a distinguir fácilmente a los usuarios y realizar consultas.'
+    #         'Los clientes son los principales usuarios .'
+    #     )
+    # )
+    # is_verified = models.BooleanField(
+    #     'verifield',
+    #     default=True,
+    #     help_text=' Establecido en verdadero cuando el usuario haya verificado su dirección de correo electrónico.'
+    # )
+    def __str__(self):
+        """Return username"""
+        return self.username
+
+    # def get_short_name(self):
+    #     return self.username
 class Rol(models.Model):
     nombre  = models.CharField(max_length=30, choices=ROL, unique=True)
     
@@ -75,6 +117,11 @@ class Rol(models.Model):
         return self.nombre
 
 class Perfil(models.Model):
+    """perfil model
+
+    Un perfil contiene datos públicos de un usuario como:
+    documento, tipo documento, direccion , foto ...
+    """
     documento       = models.PositiveIntegerField(unique=True)
     tipo_documento  = models.CharField(max_length=20, choices = TIPO_DOCUMENTO)
     direccion       = models.CharField(max_length=50,null= True, blank= True)
@@ -119,15 +166,22 @@ class Proyecto(models.Model):
     def __str__(self):
         return self.nombre_proyecto
 
-    
-class Equipo_trabajo (models.Model):
-    codigo_grupo    = models.CharField(max_length=15, unique = True) # c+odigo auto generado por medio de un script 
+
+class Grupo (models.Model):
+    nombre_grupo    = models.CharField(max_length=15, unique = True) # c+odigo auto generado por medio de un script 
+
+    def __str__(self):
+        return self.nombre_grupo
+
+class Inscrito (models.Model):
+    estado        = models.CharField(max_length=30)
+    nombre_grupo        = models.ForeignKey(Grupo, on_delete = models.PROTECT)
     perfil          = models.ForeignKey(Perfil, on_delete = models.PROTECT)
     ficha           = models.ForeignKey(Ficha, on_delete = models.PROTECT)
     proyecto        = models.IntegerField(null= True, blank= True) # consulta el id del Proyecto
     
     def __str__(self):
-        return self.codigo_grupo
+        return self.nombre_grupo
 
 
 class Entrega (models.Model):
@@ -139,7 +193,7 @@ class Entrega (models.Model):
     
     proyecto                = models.ForeignKey(Proyecto, on_delete = models.PROTECT )
     tipo_revision           = models.ForeignKey(Tipo_Revision, on_delete = models.PROTECT)
-    aprendiz                = models.ForeignKey(Equipo_trabajo, on_delete=models.CASCADE)
+    aprendiz                = models.ForeignKey(Inscrito, on_delete=models.CASCADE)
 
     creado                  = models.DateTimeField(auto_now_add = True)
     editado                 = models.DateTimeField(auto_now = True)
@@ -157,3 +211,7 @@ class Documento (models.Model):
     
     def __str__(self):
         return self.entrega.tipo_revision.nombre
+
+
+#modelo de AbtractUser
+
