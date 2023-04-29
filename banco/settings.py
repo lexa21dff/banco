@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'proyectos.User'
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,10 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
-    'proyectos',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
+    'proyectos',
     
 ]
 
@@ -137,6 +136,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS: True
+
+AUTH_USER_MODEL = 'proyectos.User'
 
 # CORS_ALLOWED_ORIGINS = [
 #     " http://localhost:8080",
